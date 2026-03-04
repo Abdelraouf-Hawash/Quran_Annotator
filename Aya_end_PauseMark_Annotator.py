@@ -123,7 +123,21 @@ if 1 <= current_index <= TOTAL_AYAT:
     # ---- Annotation Status Box ----
     is_annotated = ayah["global_index"] in annotations_df["global_index"].values
     if is_annotated:
-        st.info("✅ This Ayah is already annotated.")
+        existing_label = annotations_df[
+            annotations_df.global_index == ayah["global_index"]
+        ]["annotation"].values[0]
+
+        st.info(f'✅ This Ayah is already annotated as: ( {existing_label} )')
+        # Delete Annotation Button
+        if st.button("🗑 Delete This Annotation", use_container_width=False):
+            annotations_df = annotations_df[
+                annotations_df.global_index != ayah["global_index"]
+            ]
+            annotations_df.to_csv(ANNOTATION_FILE, index=False)
+
+            st.success("Annotation deleted successfully.")
+            st.rerun()
+
     else:
         st.warning("⚠️ This Ayah is NOT annotated yet.")
 
