@@ -77,7 +77,13 @@ else:
 if "current_index" not in st.session_state:
     st.session_state.current_index = 1  # start from first ayah
 
+
+# Sidebar Display Options
+st.sidebar.title("Display Options")
+is_mobile = st.sidebar.checkbox("Mobile Layout", value=False)
+
 # Sidebar Navigation (Surah + Aya)
+st.sidebar.write("---")
 st.sidebar.title("Navigation")
 
 surah_input = st.sidebar.number_input(
@@ -168,10 +174,6 @@ if 1 <= current_index <= TOTAL_AYAT:
     labels = ['م', 'لا', 'ط', 'قلي', 'وقفة', 'ق', 'ز', 'ص',
               'تعانق', 'ج', 'صلي', 'س', 'ع', 'Nan']
 
-    
-    # Responsive Column Count (Adjust manually if needed)
-    is_mobile = st.sidebar.checkbox("Mobile Layout", value=False)
-
     if is_mobile:
         cols_per_row = 3  # Mobile-friendly layout
     else:
@@ -198,19 +200,19 @@ else:
 
 # Sidebar Progress
 st.sidebar.write("---")
+st.sidebar.title("Annotation Progress")
 st.sidebar.write(f"Total Ayat: {TOTAL_AYAT}")
 st.sidebar.write(f"Annotated: {len(annotations_df)}")
-
 progress = len(annotations_df) / TOTAL_AYAT
 st.sidebar.progress(progress)
 
-st.write("---")
-st.subheader("Export Annotations")
-
+# Sidebar Export
+st.sidebar.write("---")
+st.sidebar.title("Export Annotations")
 if len(annotations_df) > 0:
     csv_data = annotations_df.to_csv(index=False).encode("utf-8")
 
-    st.download_button(
+    st.sidebar.download_button(
         label="⬇ Download Annotation CSV",
         data=csv_data,
         file_name="Aya_ends_PM_annotated.csv",
@@ -218,4 +220,4 @@ if len(annotations_df) > 0:
         use_container_width=True
     )
 else:
-    st.info("No annotations yet to download.")
+    st.sidebar.info("No annotations yet to download.")
