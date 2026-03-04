@@ -203,3 +203,19 @@ st.sidebar.write(f"Annotated: {len(annotations_df)}")
 
 progress = len(annotations_df) / TOTAL_AYAT
 st.sidebar.progress(progress)
+
+st.write("---")
+st.subheader("Export Annotations")
+
+if len(annotations_df) > 0:
+    csv_data = annotations_df.to_csv(index=False).encode("utf-8")
+
+    st.download_button(
+        label="⬇ Download Annotation CSV",
+        data=csv_data,
+        file_name="Aya_ends_PM_annotated.csv",
+        mime="text/csv",
+        use_container_width=True
+    )
+else:
+    st.info("No annotations yet to download.")
