@@ -145,6 +145,23 @@ if 1 <= current_index <= TOTAL_AYAT:
         )
 
     st.write("---")
+    # st.subheader("Navigation")
+
+    nav_col1, nav_col2 = st.columns(2)
+
+    with nav_col1:
+        if st.button("⬅ Previous", use_container_width=True):
+            if st.session_state.current_index > 1:
+                st.session_state.current_index -= 1
+                st.rerun()
+
+    with nav_col2:
+        if st.button("Next ➡", use_container_width=True):
+            if st.session_state.current_index < TOTAL_AYAT:
+                st.session_state.current_index += 1
+                st.rerun()
+
+    st.write("---")
     st.subheader("Annotation")
 
     def annotate(label):
@@ -221,3 +238,70 @@ if len(annotations_df) > 0:
     )
 else:
     st.sidebar.info("No annotations yet to download.")
+
+# # ---- Sidebar: Unannotated Ayahs ----
+# st.sidebar.write("---")
+# st.sidebar.title("Unannotated Ayahs")
+
+# # Get list of unannotated ayahs
+# unannotated_df = quran[~quran.global_index.isin(annotations_df.global_index)]
+
+# if not unannotated_df.empty:
+#     for _, row in unannotated_df.iterrows():
+#         col1, col2 = st.sidebar.columns([2,1])
+
+#         with col1:
+#             st.markdown(f"Surah {row['surah_index']} - Aya {row['aya_index']}")
+
+#         with col2:
+#             if st.button("Show", key=f"show_{row['global_index']}"):
+#                 st.session_state.current_index = int(row['global_index'])
+#                 st.rerun()
+#             if st.button("Clear", key=f"clear_{row['global_index']}"):
+#                 # Just deselecting: could reset to first ayah or do nothing
+#                 st.session_state.current_index = 1
+#                 st.rerun()
+# else:
+#     st.sidebar.info("All ayahs are annotated ✅")
+
+# ---- Sidebar: Show/Hide Unannotated Ayahs ----
+st.sidebar.write("---")
+st.sidebar.title("Unannotated Ayahs")
+
+# Track show/hide state
+if "show_unannotated" not in st.session_state:
+    st.session_state.show_unannotated = False
+
+# Number of ayahs to show
+show_count = st.sidebar.number_input(
+    "Number of Ayahs to Show",
+    min_value=1,
+    max_value=500,
+    value=10
+)
+
+col_show, col_clear = st.sidebar.columns(2)
+with col_show:
+    if st.button("Show"):
+        st.session_state.show_unannotated = True
+        st.rerun()
+with col_clear:
+    if st.button("Clear"):
+        st.session_state.show_unannotated = False
+        st.rerun()
+
+# ---- Display Unannotated Ayahs in Main Area ----
+if st.session_state.show_unannotated:
+    unannotated_df = quran[~quran.global_index.isin(annotations_df.global_index)]
+    st.sidebar.subheader(f"📜 Unannotated Ayahs (Showing {min(len(unannotated_df), show_count)} of {len(unannotated_df)})")
+    
+    if not unannotated_df.empty:
+        # Limit number of ayahs displayed
+        for _, row in unannotated_df.head(show_count).iterrows():
+            st.sidebar.markdown(
+                f"Surah {row['surah_index']} - Aya {row['aya_index']}",
+                text_alignment="center",
+                unsafe_allow_html=True
+            )
+    else:
+        st.info("All ayahs are annotated ✅")
