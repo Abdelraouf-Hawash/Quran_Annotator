@@ -3,3 +3,4 @@ pandas
 streamlit
 streamlit-autorefresh
 lxml
+altair==4.2.2
