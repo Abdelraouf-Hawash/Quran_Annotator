@@ -225,6 +225,7 @@ if 1 <= current_index <= TOTAL_AYAT:
     # if st.button("Terminate Session"):
     #     st.success("Session terminated. All progress saved.")
     #     st.stop()
+    
 
 else:
     st.success("شكرا جزيلا لكم، جعله الله في ميزان حسناتكم 🌿")
