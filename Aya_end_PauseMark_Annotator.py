@@ -202,10 +202,10 @@ if 1 <= current_index <= TOTAL_AYAT:
         st.session_state.current_index += 1
         st.rerun() # immediate refresh (fix first-click issue)
 
-    labels2 = ['م', 'لا', 'ط', 'قلي', 'وقفة', 'ق', 'ز', 'ص',
-              '∴', 'ج', 'صلي', 'س', 'ع', 'Nan',
-                'ج/صلي', 'لا/صلي', '∴/ط', '∴/ج/ع', 'لا/ج', '∴/لا',
-                'س/ط','لا/ز']
+    labels2 = ['Nan', 'ع', 'م', 'لا', 'ط', 'قلي', '~',
+                'ق', 'ز', 'ص', '∴', 'ج', 'صلي', 'س',
+                'ج/صلي', 'لا/صلي', '∴/ط', '∴/ج/ع', 'لا/ج', '∴/لا','~/ط',
+                'لا/ز', 'وقفة']
 
     if is_mobile:
         cols_per_row2 = 4  # Mobile-friendly layout
