@@ -219,12 +219,12 @@ if 1 <= current_index <= TOTAL_AYAT:
             if col.button(label, use_container_width=True):
                 annotate(label)
 
-    # Terminate Button
+    # # Terminate Button
 
-    st.write("---")
-    if st.button("Terminate Session"):
-        st.success("Session terminated. All progress saved.")
-        st.stop()
+    # st.write("---")
+    # if st.button("Terminate Session"):
+    #     st.success("Session terminated. All progress saved.")
+    #     st.stop()
 
 else:
     st.success("شكرا جزيلا لكم، جعله الله في ميزان حسناتكم 🌿")
