@@ -202,30 +202,29 @@ if 1 <= current_index <= TOTAL_AYAT:
         st.session_state.current_index += 1
         st.rerun() # immediate refresh (fix first-click issue)
 
-    labels = ['م', 'لا', 'ط', 'قلي', 'وقفة', 'ق', 'ز', 'ص',
-              'تعانق', 'ج', 'صلي', 'س', 'ع', 'Nan']
+    labels2 = ['م', 'لا', 'ط', 'قلي', 'وقفة', 'ق', 'ز', 'ص',
+              '∴', 'ج', 'صلي', 'س', 'ع', 'Nan',
+                'ج/صلي', 'لا/صلي', '∴/ط', '∴/ج/ع', 'لا/ج', '∴/لا']
 
     if is_mobile:
-        cols_per_row = 3  # Mobile-friendly layout
+        cols_per_row2 = 4  # Mobile-friendly layout
     else:
-        cols_per_row = 7   # PC default
+        cols_per_row2 = 7   # PC default
 
-    # ---- Render Buttons in Rows ----
-    for i in range(0, len(labels), cols_per_row):
-        row_labels = labels[i:i+cols_per_row]
-        cols = st.columns(cols_per_row)
+    # Render Buttons in Rows
+    for i in range(0, len(labels2), cols_per_row2):
+        row_labels = labels2[i:i+cols_per_row2]
+        cols = st.columns(cols_per_row2)
 
         for col, label in zip(cols, row_labels):
             if col.button(label, use_container_width=True):
                 annotate(label)
 
     # # Terminate Button
-
     # st.write("---")
     # if st.button("Terminate Session"):
     #     st.success("Session terminated. All progress saved.")
     #     st.stop()
-    
 
 else:
     st.success("شكرا جزيلا لكم، جعله الله في ميزان حسناتكم 🌿")
