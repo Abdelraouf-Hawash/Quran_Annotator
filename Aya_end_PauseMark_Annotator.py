@@ -244,12 +244,14 @@ st.sidebar.write("---")
 st.sidebar.title("Export Annotations")
 if len(annotations_df) > 0:
     csv_data = annotations_df.to_csv(index=False).encode("utf-8")
+    # csv_data = annotations_df.to_csv(index=False).encode("utf-8-sig")  # Add BOM for Excel compatibility
 
     st.sidebar.download_button(
         label="⬇ Download Annotation CSV",
         data=csv_data,
         file_name="Aya_ends_PM_annotated.csv",
         mime="text/csv",
+        key="download_annotations",
         use_container_width=True
     )
 else:
